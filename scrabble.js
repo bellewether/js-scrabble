@@ -101,7 +101,6 @@ Player.prototype.highestScoringWord = function() {
   return Scrabble.highestScoreFrom(this.plays);
 };
 
-// this function not working quite yet
 Player.prototype.highestWordScore = function() {
   var highWord = this.highestScoringWord();
   var highScore = Scrabble.scoreThisWord(highWord);
@@ -116,14 +115,15 @@ module.exports = Player;
 // Random things I was using to test
 var myWordScore = new Scrabble;
 var aScore = Scrabble.scoreThisWord("QX");
-var scoredThing = Scrabble.highestScoreFrom(["WORD", "XXX", "salamander", "JJJ"])
-console.log(scoredThing);
+var wordArray = Scrabble.highestScoreFrom(["WORD", "XXX", "salamander", "JJJ"])
+console.log("Highest Scoring Word From Array:" + wordArray);
 
 var FootFoot = new Player("FootFoot");
 FootFoot.play("XXX");
 FootFoot.play("JJJ");
-FootFoot.play("CAT");
-console.log(FootFoot.plays);
-console.log(FootFoot.totalScore);
-console.log(FootFoot.highestScoringWord(FootFoot.plays))
-console.log(FootFoot.highestWordScore)
+FootFoot.play("catcats");
+
+console.log("Plays Array:" + FootFoot.plays);
+console.log("Total Score:" + FootFoot.totalScore);
+console.log("Highest Scoring Word:" + FootFoot.highestScoringWord(FootFoot.plays))
+console.log("Highest Word Score:" + FootFoot.highestWordScore())
