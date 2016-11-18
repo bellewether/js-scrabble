@@ -1,13 +1,13 @@
-var Scrabble = function() {
-  this.scoreChart = {
-    1: ["A", "E", "I", "O", "U", "L", "N", "R", "S", "T"],
-    2: ["D", "G"],
-    3: ["B", "C", "M", "P"],
-    4: ["F", "H", "V", "W", "Y"],
-    5: ["K"],
-    8: ["J", "X"],
-    10: ["Q", "Z"]
-  };
+var Scrabble = function() {};
+
+var scoreChart = {
+  1: ["A", "E", "I", "O", "U", "L", "N", "R", "S", "T"],
+  2: ["D", "G"],
+  3: ["B", "C", "M", "P"],
+  4: ["F", "H", "V", "W", "Y"],
+  5: ["K"],
+  8: ["J", "X"],
+  10: ["Q", "Z"]
 };
 
 // YOUR CODE HERE
@@ -16,8 +16,8 @@ Scrabble.scoreThisWord = function(word) {
   var word = word.toUpperCase();
 
   for (var i = 0; i < word.length; i++) {
-    for (var j in this.scoreChart) {
-      if (this.scoreChart[j].includes(word[i])) {
+    for (var j in scoreChart) {
+      if (scoreChart[j].includes(word[i])) {
         score = score + parseInt(j);
         break
       }
@@ -57,7 +57,6 @@ Scrabble.highestScoreFrom = function(arrayOfWords) {
   // find the highest scoring word
   for (var k = 0; k < maxWords.length; k++) {
     var currentShortLength = 7;
-    // var smallestWord = null;
 
     if (maxWords[k].length == 7) {
       highestScoringWord = maxWords[k];
@@ -74,28 +73,17 @@ Scrabble.highestScoreFrom = function(arrayOfWords) {
 
 
 
-var myWordScore = new Scrabble;
-// var aScore = myWordScore.scoreThisWord("QX");
-scoredThing = Scrabble.highestScoreFrom(["WORD", "XXX", "salamander", "JJJ"])
-console.log(scoredThing);
-
-
-
+// Player Constructor
 var Player = function(name) {
   this.name = name;
   this.plays = []; // an array of words played by the player
   this.totalScore = 0;
 };
 
-// // Any new instances of Player should inherit the properties and functions defined on Scrabble
-// Player.prototype = Scrabble;
-
-
-// function should add the input word to the plays array
+// this function should add the input word to the plays array
 Player.prototype.play = function(word) {
   if (this.hasWon() == false) {
     this.plays.push(word); // adds the word to the plays array
-
     this.totalScore += Scrabble.scoreThisWord(word);
   } else {
   return false;
@@ -109,23 +97,33 @@ Player.prototype.hasWon = function() {
   return false;
 };
 
-Player.prototype.highestScoringWord = function(array) {
-  return Scrabble.highestScoreFrom(array);
+Player.prototype.highestScoringWord = function() {
+  return Scrabble.highestScoreFrom(this.plays);
 };
 
+// this function not working quite yet
 Player.prototype.highestWordScore = function() {
-  var highWord = this.highestScoringWord;
+  var highWord = this.highestScoringWord();
   var highScore = Scrabble.scoreThisWord(highWord);
 
   return highScore;
 };
 
-var FootFoot = new Player;
-console.log(FootFoot.play("XXX"));
-console.log(FootFoot.play("JJJ"));
-console.log(FootFoot.play("CAT"));
-console.log(this.plays);
-
-
 module.exports = Scrabble;
 module.exports = Player;
+
+
+// Random things I was using to test
+var myWordScore = new Scrabble;
+var aScore = Scrabble.scoreThisWord("QX");
+var scoredThing = Scrabble.highestScoreFrom(["WORD", "XXX", "salamander", "JJJ"])
+console.log(scoredThing);
+
+var FootFoot = new Player("FootFoot");
+FootFoot.play("XXX");
+FootFoot.play("JJJ");
+FootFoot.play("CAT");
+console.log(FootFoot.plays);
+console.log(FootFoot.totalScore);
+console.log(FootFoot.highestScoringWord(FootFoot.plays))
+console.log(FootFoot.highestWordScore)
